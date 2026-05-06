@@ -84,12 +84,12 @@ def history_plot(history, p_th, N):
 
 
 # Generate random points and compute max angle
-N_mc = 10000
+N_mc = 20000
 # N_points = 20
 solutions = []
 printing_ = False
 
-for N_points in range(3, 21):
+for N_points in range(3, 18):
     valid_count = 0
     history = []
     for _ in range(N_mc):  # Run multiple times to see different configurations
@@ -105,7 +105,7 @@ for N_points in range(3, 21):
     solutions.append((N_points, valid_count / N_mc))
 
 
-def theoretical_probability(solutions):
+def empirical_probability(solutions):
     plt.plot([s[0] for s in solutions], [s[1] for s in solutions], marker="o")
     plt.title("Probability of Valid Configuration vs Number of Points")
     plt.xscale("linear")
@@ -115,8 +115,39 @@ def theoretical_probability(solutions):
     plt.grid()
     plt.show()
 
+def theoretical_probability(solutions):
+    N_points = [s[0] for s in solutions]
+    p_th = [ (3/4)*(1/2**(n-2)) for n in N_points]
+    plt.plot(N_points, p_th, marker="o", color="red")
+    plt.title("Theoretical Probability of Valid Configuration vs Number of Points")
+    plt.xscale("linear")
+    plt.yscale("log")
+    plt.xlabel("Number of Points")
+    plt.ylabel("Theoretical Probability")
+    plt.grid()
+    plt.show()
 
-theoretical_probability(solutions)
+
+def empirical_vs_theoretical(solutions):
+    N_points = [s[0] for s in solutions]
+    p_emp = [s[1] for s in solutions]
+    p_th_1 = [ (3/4)*((7/12)**(n-3)) for n in N_points]
+    plt.plot(N_points, p_emp, marker="o", label="Empirical Probability")
+    plt.plot(N_points, p_th_1, marker="o", color="blue", label="Theoretical Probability 1")
+    plt.title("Empirical vs Theoretical Probability of Valid Configuration")
+    plt.xscale("linear")
+    plt.yscale("log")
+    plt.xlabel("Number of Points")
+    plt.ylabel("Probability")
+    plt.legend()
+    plt.grid()
+    plt.show()
+
+
+empirical_vs_theoretical(solutions)
+
+# theoretical_probability(solutions)
+# empirical_probability(solutions)
 # print(f"Theoretical probability: {p_th}")
 
 # history_plot(history, p_th, N_points)
