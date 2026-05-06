@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+#random comment
 
 # Sample 2 random points between 0 and 2 pi
 def generate_points(num_points=4):
