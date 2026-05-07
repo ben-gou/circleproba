@@ -85,12 +85,12 @@ def history_plot(history, p_th, N):
 
 
 # Generate random points and compute max angle
-N_mc = 20000
+N_mc = 50_000
 # N_points = 20
 solutions = []
 printing_ = False
 
-for N_points in range(3, 18):
+for N_points in range(3, 20):
     valid_count = 0
     history = []
     for _ in range(N_mc):  # Run multiple times to see different configurations
@@ -102,7 +102,7 @@ for N_points in range(3, 18):
             valid_count += 1
         history.append(valid_count / (len(history) + 1))
         # plot(points, max_ang=max_ang, rotated_points=rotated_points
-    print(f"Valid configurations: {valid_count}/{N_mc}, Probability: {valid_count/N_mc}")
+    # print(f"Valid configurations: {valid_count}/{N_mc}, Probability: {valid_count/N_mc}")
     solutions.append((N_points, valid_count / N_mc))
 
 
@@ -132,12 +132,12 @@ def theoretical_probability(solutions):
 def empirical_vs_theoretical(solutions):
     N_points = [s[0] for s in solutions]
     p_emp = [s[1] for s in solutions]
-    p_th_1 = [ (3/4)*((7/12)**(n-3)) for n in N_points]
+    p_th_0 = [ (n)*(1/2**(n-1)) for n in N_points]
     plt.plot(N_points, p_emp, marker="o", label="Empirical Probability")
-    plt.plot(N_points, p_th_1, marker="o", color="blue", label="Theoretical Probability 1")
+    plt.plot(N_points, p_th_0, marker="o", color="red", label="Theoretical Probability 0")
     plt.title("Empirical vs Theoretical Probability of Valid Configuration")
     plt.xscale("linear")
-    plt.yscale("log")
+    plt.yscale("linear")
     plt.xlabel("Number of Points")
     plt.ylabel("Probability")
     plt.legend()
